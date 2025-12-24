@@ -14,7 +14,7 @@ source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # Set Variables
 
 # Create Aliases (From ZSH Course) 
-alias lst="ls -lAh"
+alias lst="ls -lAh ~"
 
 # Customize Prompts
 
