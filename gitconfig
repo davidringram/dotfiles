@@ -1,0 +1,7 @@
+[user]
+	name = David R Ingram
+	email = 13292249+davidringram@users.noreply.github.com
+[init]
+	defaultBranch = main
+[core]
+	excludesfile = /Users/davidingram/.gitignore_global
