@@ -79,13 +79,19 @@ alias gl="git log --oneline --graph --decorate"
 alias gs="git status"
 
 #Music Shortcuts
-alias lofi='mpv --no-video "https://www.youtube.com/watch?v=jfKfPfyJRdk"'
-alias japanesecafe='mpv --no-video "https://www.youtube.com/watch?v=bRnTGwCbr3E"'
-alias rainlofi='mpv --no-video "https://www.youtube.com/watch?v=vYIYIVmOo3Q"'
-alias darkfantasy='mpv --no-video "https://www.youtube.com/watch?v=UrfOxtLiBCI"'
-alias retrogame='mpv --no-video "https://www.youtube.com/watch?v=3Q_S7tTICFY"'
-alias synthwave='mpv --no-video "https://www.youtube.com/watch?v=4xDzrJKXOOY"'
-
+alias mute="killall mpv"
+alias lofi='mpv --no-video "https://www.youtube.com/watch?v=jfKfPfyJRdk" &'
+alias japanesecafe='mpv --no-video "https://www.youtube.com/watch?v=bRnTGwCbr3E" &'
+alias rainlofi='mpv --no-video "https://www.youtube.com/watch?v=vYIYIVmOo3Q" &'
+alias darkfantasy='mpv --no-video "https://www.youtube.com/watch?v=UrfOxtLiBCI" &'
+alias retrogame='mpv --no-video "https://www.youtube.com/watch?v=3Q_S7tTICFY" &'
+alias synthwave='mpv --no-video "https://www.youtube.com/watch?v=4xDzrJKXOOY" &'
+alias cozyrain='mpv --no-video "https://www.youtube.com/watch?v=XtFvoAXGHlo" &'
+alias chrono='mpv --no-video "https://www.youtube.com/watch?v=q1OtMEV4PfM" &'
+alias tavern='mpv --no-video "https://www.youtube.com/watch?v=vK5VwVyxkbI" &'
+alias ghibli='mpv --no-video "https://www.youtube.com/watch?v=gIWsboTllGA" &'
+alias campfire='mpv --no-video "https://www.youtube.com/watch?v=KLL26li4Gjo" &'
+alias camping='mpv --no-video "http://youtube.com/watch?v=oDdVHn5Pvm0" &'
 
 #enviroment lab() with smart switch
 lab() {
