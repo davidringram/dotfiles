@@ -12,6 +12,7 @@ source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Set Variables
+export MANPAGER="sh -c 'col -bx | bat -p -lman'"
 
 # Create Aliases (From ZSH Course) 
 alias lst="ls -lAh"
@@ -63,7 +64,7 @@ alias cp="cp -i"
 alias mv="mv -i"
 alias rm="rm -i"
 
-# Shortcuts
+# Shortcuts``
 alias c="clear"
 alias h="history"
 alias lg="lazygit"
