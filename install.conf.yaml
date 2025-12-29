@@ -9,6 +9,7 @@
     ~/.zshrc: 
     ~/.gitconfig: 
     ~/.config/starship.toml: 
+    ~/.hyper.js:
 
 - create:
     - ~/School
