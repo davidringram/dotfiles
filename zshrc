@@ -1,6 +1,4 @@
 
-alias antigravity='open -a "Google Antigravity"'
-
 # Added by Antigravity
 export PATH="/Users/davidingram/.antigravity/antigravity/bin:$PATH"
 
@@ -79,20 +77,44 @@ alias gs="git status"
 alias gl="git log --oneline --graph --decorate"
 alias gs="git status"
 
-#Music Shortcuts
+# Download video as highest quality MP4
+alias ytv='yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best"'
+
+# Download just the audio as an MP3
+alias yta='yt-dlp -x --audio-format mp3'
+
+#Music Shortcuts 100% and 50%
 alias mute="killall mpv"
 alias lofi='mpv --no-video "https://www.youtube.com/watch?v=jfKfPfyJRdk" &'
-alias japanesecafe='mpv --no-video "https://www.youtube.com/watch?v=bRnTGwCbr3E" &'
+alias lofi50='mpv --no-video --volume=50 "https://www.youtube.com/watch?v=jfKfPfyJRdk" &'
+alias jpcafe='mpv --no-video "https://www.youtube.com/watch?v=bRnTGwCbr3E" &'
+alias jpcafe50='mpv --no-video --volume=50 "https://www.youtube.com/watch?v=bRnTGwCbr3E" &'
 alias rainlofi='mpv --no-video "https://www.youtube.com/watch?v=vYIYIVmOo3Q" &'
+alias rainlofi50='mpv --no-video --volume=50 "https://www.youtube.com/watch?v=vYIYIVmOo3Q" &'
 alias darkfantasy='mpv --no-video "https://www.youtube.com/watch?v=UrfOxtLiBCI" &'
+alias darkfantasy50='mpv --no-video --volume=50 "https://www.youtube.com/watch?v=UrfOxtLiBCI" &'
+alias fantlofi='mpv --no-video "https://www.youtube.com/watch?v=OQtGTzWMAM8" &'
+alias fantlofi50='mpv --no-video --volume=50 "https://www.youtube.com/watch?v=OQtGTzWMAM8" &'
 alias retrogame='mpv --no-video "https://www.youtube.com/watch?v=3Q_S7tTICFY" &'
+alias retrogame50='mpv --no-video --volume=50 "https://www.youtube.com/watch?v=3Q_S7tTICFY" &'
 alias synthwave='mpv --no-video "https://www.youtube.com/watch?v=4xDzrJKXOOY" &'
+alias synthwave50='mpv --no-video --volume=50 "https://www.youtube.com/watch?v=4xDzrJKXOOY" &'
 alias cozyrain='mpv --no-video "https://www.youtube.com/watch?v=XtFvoAXGHlo" &'
-alias chrono='mpv --no-video "https://www.youtube.com/watch?v=q1OtMEV4PfM" &'
+alias cozyrain50='mpv --no-video --volume=50 "https://www.youtube.com/watch?v=XtFvoAXGHlo" &'
+alias rpg='mpv --no-video "https://www.youtube.com/watch?v=lDU7SvjlhFw" &'
+alias rpg50='mpv --no-video --volume=50 "https://www.youtube.com/watch?v=lDU7SvjlhFw" &'
+alias finalfantasy='mpv --no-video "https://www.youtube.com/watch?v=QI0xIx6_2Dc" &'
+alias finalfantasy50='mpv --no-video --volume=50 "https://www.youtube.com/watch?v=QI0xIx6_2Dc" &'
 alias tavern='mpv --no-video "https://www.youtube.com/watch?v=vK5VwVyxkbI" &'
+alias tavern50='mpv --no-video --volume=50 "https://www.youtube.com/watch?v=vK5VwVyxkbI" &'
 alias ghibli='mpv --no-video "https://www.youtube.com/watch?v=gIWsboTllGA" &'
+alias ghibli50='mpv --no-video --volume=50 "https://www.youtube.com/watch?v=gIWsboTllGA" &'
 alias campfire='mpv --no-video "https://www.youtube.com/watch?v=KLL26li4Gjo" &'
-alias camping='mpv --no-video "http://youtube.com/watch?v=oDdVHn5Pvm0" &'
+alias campfire50='mpv --no-video --volume=50 "https://www.youtube.com/watch?v=KLL26li4Gjo" &'
+alias bluegrass='mpv --no-video "https://www.youtube.com/watch?v=p9NxcfZQung" &'
+alias bluegrass50='mpv --no-video --volume=50 "https://www.youtube.com/watch?v=p9NxcfZQung" &'
+alias newage='mpv --no-video "https://www.youtube.com/watch?v=6OZpV5bbIwY" &'
+alias newage50='mpv --no-video --volume=50 "https://www.youtube.com/watch?v=6OZpV5bbIwY" &'
 
 #enviroment lab() with smart switch
 lab() {
@@ -139,5 +161,49 @@ fortune | cowsay -f dragon
 # Watch Star Wars Quotes
 alias sw="telnet towel.blinkenlights.nl"
 
-# Weather API for CLI Reports
-export WEATHER_API_KEY="{{ .weather_key | default "free_version" }}"
+
+#self-clean system
+
+# Custom God-Tier Cleanup Script
+clean() {
+
+    echo "🔄 Updating Homebrew tools first..."
+    brew update && brew upgrade  # This ensures we have the new versions
+    
+    echo "🧹 Starting system deep-clean..."
+    
+    # 1. Homebrew Cleanup
+    echo "📦 Cleaning Homebrew..."
+    brew cleanup -s
+    brew autoremove
+    
+    # 2. Clear User Caches (Safe)
+    echo "🗂️  Clearing User Caches..."
+    rm -rf ~/Library/Caches/*
+    
+    # 3. Purge Local Time Machine Snapshots (The 'System Data' culprit)
+    echo "⏳ Purging local Time Machine snapshots..."
+    tmutil listlocalsnapshots / | awk -F. '{print $4}' | xargs -n1 tmutil deletelocalsnapshots 2>/dev/null
+    
+    # 4. Flush DNS
+    echo "🌐 Flushing DNS cache..."
+    sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder
+    
+    # 5. Empty Trash (Optional - remove if you prefer doing it manually)
+    echo "🗑️  Emptying Trash..."
+    rm -rf ~/.Trash/*
+
+    echo "✅ Done! Your M4 is now lean and mean."
+    fastfetch
+}
+
+# bun completions
+[ -s "/Users/davidingram/.bun/_bun" ] && source "/Users/davidingram/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

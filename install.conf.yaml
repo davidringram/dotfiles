@@ -3,16 +3,18 @@
     link:
       relink: true
 
-- clean: ['~']
+- clean: ["~"]
 
 - link:
-    ~/.zshrc: 
-    ~/.gitconfig: 
-    ~/.config/starship.toml: 
+    ~/.zshrc:
+    ~/.gitconfig:
+    ~/.config/starship.toml:
     ~/.hyper.js:
 
 - create:
     - ~/School
 
-#- shell:
-#  - [git submodule update --init --recursive, Installing submodules]
+- shell:
+    - command: ./setup_homebrew.zsh
+      stdout: true
+      stderr: true
