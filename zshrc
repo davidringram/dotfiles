@@ -11,9 +11,10 @@ source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Set Variables
 export MANPAGER="sh -c 'col -bx | bat -p -lman'"
+export HOMEBREW_CASK_OPTS="--no-quarantine"
 
 # Create Aliases (From ZSH Course) 
-alias lst="ls -lAh"
+alias list="eza -lAh --git"
 
 # Customize Prompts
 
@@ -163,7 +164,6 @@ alias sw="telnet towel.blinkenlights.nl"
 
 
 #self-clean system
-
 # Custom God-Tier Cleanup Script
 clean() {
 
@@ -183,7 +183,7 @@ clean() {
     
     # 3. Purge Local Time Machine Snapshots (The 'System Data' culprit)
     echo "⏳ Purging local Time Machine snapshots..."
-    tmutil listlocalsnapshots / | awk -F. '{print $4}' | xargs -n1 tmutil deletelocalsnapshots 2>/dev/null
+    tmutil listlocalsnapshots / | awk -F. '{print $4}' | xargs -n1 tmutil deletelocalsnaeagle85pshots 2>/dev/null
     
     # 4. Flush DNS
     echo "🌐 Flushing DNS cache..."
@@ -204,6 +204,3 @@ clean() {
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
