@@ -37,6 +37,8 @@ brew "httpie"
 brew "innoextract"
 # Simple terminal UI for git commands
 brew "lazygit"
+# Mac App Store command-line interface
+brew "mas"
 # Feature-rich command-line audio/video downloader
 brew "yt-dlp"
 # Media player based on MPlayer and mplayer2
@@ -85,3 +87,4 @@ cask "r-lib/rig/rig"
 cask "stats"
 # Native GUI tool for relational databases
 cask "tableplus"
+mas "Numbers", id: 409203825
