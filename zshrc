@@ -1,3 +1,4 @@
+echo "welcome to the shell baby!"
 
 # Added by Antigravity
 export PATH="/Users/davidingram/.antigravity/antigravity/bin:$PATH"
