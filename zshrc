@@ -16,6 +16,7 @@ export HOMEBREW_CASK_OPTS="--no-quarantine"
 
 # Create Aliases (From ZSH Course) 
 alias list="eza -lAh --git"
+alias bbd='brew bundle dump --force --describe'
 
 # Customize Prompts
 

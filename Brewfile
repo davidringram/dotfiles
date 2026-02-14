@@ -1,4 +1,6 @@
+tap "libsql/sqld"
 tap "r-lib/rig"
+tap "tursodatabase/tap"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
@@ -37,14 +39,20 @@ brew "httpie"
 brew "innoextract"
 # Simple terminal UI for git commands
 brew "lazygit"
+# Pager program similar to more
+brew "less"
 # Mac App Store command-line interface
 brew "mas"
 # Feature-rich command-line audio/video downloader
 brew "yt-dlp"
 # Media player based on MPlayer and mplayer2
 brew "mpv"
+# Free (GNU) replacement for the Pico text editor
+brew "nano"
 # Fast, disk space efficient package manager
 brew "pnpm"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.11"
 # Prints a steam locomotive if you type sl instead of ls
 brew "sl"
 # Cross-shell prompt for astronauts
@@ -61,6 +69,7 @@ brew "uv"
 brew "visidata"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
+brew "tursodatabase/tap/turso"
 cask "font-hack-nerd-font"
 cask "font-symbols-only-nerd-font"
 # Utility to provide quick look previews for files that aren't natively supported
