@@ -88,6 +88,8 @@ cask "jordanbaird-ice"
 cask "keyboard-maestro"
 # Discover, download, and run local LLMs
 cask "lm-studio"
+# Run LLMs locally
+cask "msty"
 # Verify system files structure, run miscellaneous maintenance and more
 cask "onyx"
 # Replacement for Docker Desktop

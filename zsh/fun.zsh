@@ -1,7 +1,6 @@
 # ------------------------------------------------------------------------------
 # THE FUN STUFF (Vibes & Entertainment)
 # ------------------------------------------------------------------------------
-echo "Vibes are Online!"
 
 # --- Focus Music (Headless YouTube Streams via mpv) ---
 # Usage: 'lofi' for full volume, 'lofi50' for half volume. 'mute' to stop all.

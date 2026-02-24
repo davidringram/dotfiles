@@ -1,7 +1,6 @@
 # ------------------------------------------------------------------------------
 # PATH & ENVIRONMENT VARIABLES
 # ------------------------------------------------------------------------------
-echo "Paths and Env is online!"
 
 # 1. System Paths
 # Add Antigravity (Custom CLI)

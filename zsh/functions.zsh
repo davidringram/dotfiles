@@ -1,7 +1,6 @@
 # ------------------------------------------------------------------------------
 # CUSTOM FUNCTIONS (The Force Multipliers)
 # ------------------------------------------------------------------------------
-echo "Custom Functions are online!"
 
 # 1. Environment Lab Switcher
 # Usage: 'lab'
@@ -26,24 +25,34 @@ function astro-init() {
     return 1
   fi
 
+  # 🔐 1. Load your secure token for the install
+  export NPM_TOKEN=$(security find-generic-password -a "$USER" -s "NPM_TOKEN" -w 2>/dev/null)
+
+  # 📡 2. Pre-flight Registry Check
   echo "📡 Checking npm registry status..."
   if ! curl -s --head --request GET https://registry.npmjs.org/ | grep "200 OK" > /dev/null; then
-    echo "🚫 Registry is down. Grab a coffee and try again in 10 mins."
-    return 1
+    echo "⚠️ Registry is unstable (503). Switching to --prefer-offline mode..."
+    local OFFLINE_FLAG="--prefer-offline"
   fi
 
-  echo "🚀 Creating new Astro project: $1..."
-  pnpm create astro@latest "$1" -- --template basics --install --git --yes || return 1
+  echo "🚀 Creating Astro project: $1..."
+  # We use the token and the potential offline flag here
+  pnpm create astro@latest "$1" -- --template basics --install --git --yes $OFFLINE_FLAG || {
+    echo "❌ PNPM failed. The registry might be fully locked down."
+    return 1
+  }
   
   cd "$1" || return
 
-  echo "🎨 Adding Tailwind..."
-  pnpm astro add tailwind --yes --prefer-offline
+  echo "🎨 Installing Tailwind..."
+  pnpm astro add tailwind --yes $OFFLINE_FLAG
 
-  echo "🏔️ Adding Alpine.js..."
-  pnpm astro add alpinejs --yes --prefer-offline
+  echo "🏔️ Installing Alpine.js..."
+  pnpm astro add alpinejs --yes $OFFLINE_FLAG
 
   echo "✅ Setup Complete!"
+  echo "📂 Project: $1"
+  
   echo "💥 Dropping gravity..."
   agy .
 }

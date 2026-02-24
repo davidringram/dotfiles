@@ -1,7 +1,6 @@
 # ------------------------------------------------------------------------------
 # SHELL PLUGINS & UI (The Look & Feel)
 # ------------------------------------------------------------------------------
-echo "Plugins and UI is online!"
 
 # 1. External Plugin Sources
 # Load Zsh productivity plugins: ghost-text suggestions and command coloring.
