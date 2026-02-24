@@ -1,14 +1,19 @@
-echo "welcome to the shell baby!"
-
-# Added by Antigravity
+# Added by Antigravity --- add binaries to the start of the PATH for custom CLI tools.
 export PATH="/Users/davidingram/.antigravity/antigravity/bin:$PATH"
 
+# Initialize fnm and enable automatic Node.js version switching on directory change.
 eval "$(fnm env --use-on-cd)"
 
+# Initialize the Starship customizable shell prompt.
 eval "$(starship init zsh)"
 
+# Load Zsh plugins for auto-suggestions and syntax highlighting.
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+################################################################################
+############################ DOTFILES COURSE ###################################
+################################################################################
 
 # Set Variables
 export MANPAGER="sh -c 'col -bx | bat -p -lman'"
@@ -23,6 +28,7 @@ alias bbd='brew bundle dump --force --describe'
 # Add Locations to $PATH Variables
 
 # Write Handy Functions
+# makes a folder and goes to it
 function mkcd () {
     mkdir -p "$@" && cd "$_";
     }
@@ -30,6 +36,8 @@ function mkcd () {
 # Use ZSH Plugins
 
 # ... Other Surprises
+
+################################################################################
 
 #Added by zoxide
 eval "$(zoxide init zsh)"
@@ -44,9 +52,6 @@ alias nuke="rm -rf node_modules package-lock.json pnpm-lock.yaml && pnpm install
 alias gitfix="rm -rf .git && git init"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# Nuke Adobe/Mac Junk files recursively
-alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
 
 # Keep the system fresh
 alias refresh="brew update && brew upgrade && brew cleanup && fnm install --lts"
@@ -86,7 +91,11 @@ alias ytv='yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best"'
 # Download just the audio as an MP3
 alias yta='yt-dlp -x --audio-format mp3'
 
-#Music Shortcuts 100% and 50%
+
+################################################################################
+########################## QUICK MUSIC (+ 50%) #################################
+################################################################################
+
 alias mute="killall mpv"
 alias lofi='mpv --no-video "https://www.youtube.com/watch?v=jfKfPfyJRdk" &'
 alias lofi50='mpv --no-video --volume=50 "https://www.youtube.com/watch?v=jfKfPfyJRdk" &'
@@ -119,6 +128,10 @@ alias bluegrass50='mpv --no-video --volume=50 "https://www.youtube.com/watch?v=p
 alias newage='mpv --no-video "https://www.youtube.com/watch?v=6OZpV5bbIwY" &'
 alias newage50='mpv --no-video --volume=50 "https://www.youtube.com/watch?v=6OZpV5bbIwY" &'
 
+################################################################################
+############################# CUSTOM BUILDS#####################################
+################################################################################
+
 #enviroment lab() with smart switch
 lab() {
   if [[ -f "./.venv/bin/activate" ]]; then
@@ -131,73 +144,49 @@ lab() {
   python --version
 }
 
-# Astro + Tailwind + React + Alpine (PNPM) -> Ends with Antigravity
 function astro-init() {
   if [ -z "$1" ]; then
     echo "❌ Error: Please provide a project name."
     return 1
   fi
 
-  echo "🚀 Creating new Astro project with PNPM: $1..."
-  pnpm create astro@latest "$1" -- --template basics --install --git --yes
+  # 🔍 STEP 1: Health Check (The "Is the Internet Alive?" test)
+  echo "📡 Checking npm registry status..."
+  if ! curl -s --head  --request GET https://registry.npmjs.org/ | grep "200 OK" > /dev/null; then
+    echo "🚫 Registry is down (503/404). Grab a coffee and try again in 10 mins."
+    return 1
+  fi
+
+  # 🛠️ STEP 2: Set Retry Policy (Temporary for this session)
+  export PNPM_CONFIG_FETCH_RETRIES=5
+  export PNPM_CONFIG_FETCH_RETRY_MAXTIMEOUT=60000
+
+  echo "🚀 Creating new Astro project: $1..."
+  pnpm create astro@latest "$1" -- --template basics --install --git --yes || return 1
   
   cd "$1" || return
 
-  echo "🎨 Installing Tailwind & React..."
-  pnpm astro add tailwind react --yes
+  echo "🎨 Adding Tailwind..."
+  # Use --prefer-offline to use local cache if the registry flickers
+  pnpm astro add tailwind --yes --prefer-offline
 
-  echo "🏔️ Installing Alpine.js..."
-  pnpm astro add alpinejs --yes
+  echo "🏔️ Adding Alpine.js..."
+  pnpm astro add alpinejs --yes --prefer-offline
 
   echo "✅ Setup Complete!"
-  echo "📂 Project created at: $1"
-  
   echo "💥 Dropping gravity..."
-  
-  # FORCE the shell to run the command exactly as if you typed it
   agy .
 }
+
+################################################################################
+############################### FUN STUFF ######################################
+################################################################################
 
 # Start shell with dragon
 fortune | cowsay -f dragon
 
 # Watch Star Wars Quotes
 alias sw="telnet towel.blinkenlights.nl"
-
-
-#self-clean system
-# Custom God-Tier Cleanup Script
-clean() {
-
-    echo "🔄 Updating Homebrew tools first..."
-    brew update && brew upgrade  # This ensures we have the new versions
-    
-    echo "🧹 Starting system deep-clean..."
-    
-    # 1. Homebrew Cleanup
-    echo "📦 Cleaning Homebrew..."
-    brew cleanup -s
-    brew autoremove
-    
-    # 2. Clear User Caches (Safe)
-    echo "🗂️  Clearing User Caches..."
-    rm -rf ~/Library/Caches/*
-    
-    # 3. Purge Local Time Machine Snapshots (The 'System Data' culprit)
-    echo "⏳ Purging local Time Machine snapshots..."
-    tmutil listlocalsnapshots / | awk -F. '{print $4}' | xargs -n1 tmutil deletelocalsnaeagle85pshots 2>/dev/null
-    
-    # 4. Flush DNS
-    echo "🌐 Flushing DNS cache..."
-    sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder
-    
-    # 5. Empty Trash (Optional - remove if you prefer doing it manually)
-    echo "🗑️  Emptying Trash..."
-    rm -rf ~/.Trash/*
-
-    echo "✅ Done! Your M4 is now lean and mean."
-    fastfetch
-}
 
 # bun completions
 [ -s "/Users/davidingram/.bun/_bun" ] && source "/Users/davidingram/.bun/_bun"
@@ -211,3 +200,72 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH="$PATH:/Users/davidingram/.lmstudio/bin"
 # End of LM Studio CLI section
 
+################################################################################
+############################ CLEAN UP FILES ####################################
+################################################################################
+
+# Nuke Adobe/Mac Junk files recursively
+alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
+
+# clean_mac function
+function clean_mac() {
+    echo "🔄 Updating Homebrew index..."
+    brew update
+    
+    echo "🧹 Starting system deep-clean..."
+    
+    # 1. Homebrew Cleanup
+    echo "📦 Cleaning Homebrew cache and old versions..."
+    brew cleanup --prune=all
+    brew autoremove
+    
+    # 2. Clear User Caches
+    echo "🗂️  Clearing User Caches..."
+    rm -rf ~/Library/Caches/* 2>/dev/null
+
+    # 3. Clear System Logs
+    echo "📝 Clearing User Logs..."
+    rm -rf ~/Library/Logs/* 2>/dev/null
+    
+    # 4. Purge Local Time Machine Snapshots (Reclaims 'System Data')
+    echo "⏳ Purging local snapshots..."
+    for snapshot in $(tmutil listlocalsnapshots / | awk -F. '{print $4}'); do
+        sudo tmutil deletelocalsnapshots "$snapshot" 2>/dev/null
+    done
+
+    # 5. Clear Xcode Derived Data
+    if [ -d ~/Library/Developer/Xcode/DerivedData ]; then
+        echo "🛠️  Clearing Xcode Derived Data..."
+        rm -rf ~/Library/Developer/Xcode/DerivedData/*
+    fi
+    
+    # 6. Advanced .DS_Store Cleanup
+    # This searches your Home, Desktop, Downloads, and your Marketing Hub specifically
+    echo "📂 Removing .DS_Store files (Targeted Search)..."
+    # We use -print to show you what's happening, then -delete to kill it
+    find ~ ~/Desktop ~/Documents ~/Downloads -maxdepth 3 -name ".DS_Store" -print -delete 2>/dev/null
+
+    # 7. Flush DNS
+    echo "🌐 Flushing DNS cache..."
+    sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder
+
+    # 8. Clear Spotlight Index (Fixes "Other" Storage)
+    echo "🔍 Clearing Spotlight Index..."
+    sudo mdutil -E / 2>/dev/null
+
+    #9. clean docker/orbstack 
+    docker system prune -af --volumes
+    
+    # 10. Empty Trash
+    echo "🗑️  Emptying Trash..."
+    rm -rf ~/.Trash/* 2>/dev/null
+
+    # 11. Run System Maintenance Scripts
+    echo "⚙️  Running macOS maintenance scripts..."
+    sudo periodic daily weekly monthly
+
+    echo "✅ Done! Your M4 is now lean and mean!"
+    fastfetch
+}
+
+################################################################################

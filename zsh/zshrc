@@ -1,0 +1,21 @@
+# Welcome Greeting
+echo "Welcome to the shell, sucker!"
+
+# 1. Define Dotfiles Location
+
+# This method is more reliable for finding the actual folder where this file lives
+export ZSH_DOTS=$HOME/.dotfiles/zsh
+
+# --- LOAD MODULES ---
+# We check if the file exists before sourcing to prevent those "no such file" errors
+[[ -f "$ZSH_DOTS/path.zsh" ]]      && source "$ZSH_DOTS/path.zsh"
+[[ -f "$ZSH_DOTS/plugins.zsh" ]]   && source "$ZSH_DOTS/plugins.zsh"
+[[ -f "$ZSH_DOTS/alias.zsh" ]]     && source "$ZSH_DOTS/alias.zsh"
+[[ -f "$ZSH_DOTS/functions.zsh" ]] && source "$ZSH_DOTS/functions.zsh"
+[[ -f "$ZSH_DOTS/fun.zsh" ]]       && source "$ZSH_DOTS/fun.zsh"
+
+# Starts every new shell with a dragon dispensing wisdom
+fortune | cowsay -f dragon
+
+# 4. Dotfiles Course Placeholder
+# (Add your course-specific learnings here)

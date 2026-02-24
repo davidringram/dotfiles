@@ -7,19 +7,22 @@
 - clean: ["~"]
 
 - link:
-    ~/.zshrc:
-      path: zshrc
-    ~/.zshenv:
-      path: zshenv
-    ~/.gitconfig:
-      path: gitconfig
-    ~/.config/starship.toml:
-      path: starship.toml
+    # --- Zsh Configuration (Logic) ---
+    ~/.zshrc: zsh/zshrc
+    ~/.zshenv: zsh/zshenv
+
+    # --- Terminal UI (Look & Feel) ---
+    ~/.config/starship.toml: terminal/starship.toml
+    ~/.hyper.js: terminal/hyper.js
+
+    # --- System & Tools ---
+    ~/.gitconfig: git/gitconfig
     ~/Brewfile:
       path: Brewfile
-      force: true # Forces the symlink even if 'brew bundle dump' created a real file
+      force: true
 
 - shell:
+    # This runs the Homebrew script after the links are created
     - command: ./setup_homebrew.zsh
       stdout: true
       stderr: true
