@@ -1,16 +1,23 @@
-#Dotbot configuration file
+# Dotbot configuration file
 - defaults:
     link:
       relink: true
+      create: true # Automatically creates parent folders like ~/.config/
 
 - clean: ["~"]
 
 - link:
     ~/.zshrc:
+      path: zshrc
     ~/.zshenv:
+      path: zshenv
     ~/.gitconfig:
+      path: gitconfig
     ~/.config/starship.toml:
-    ~/.hyper.js:
+      path: starship.toml
+    ~/Brewfile:
+      path: Brewfile
+      force: true # Forces the symlink even if 'brew bundle dump' created a real file
 
 - shell:
     - command: ./setup_homebrew.zsh

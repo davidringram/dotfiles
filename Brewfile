@@ -27,10 +27,14 @@ brew "fortune"
 brew "frotz"
 # Command-line fuzzy finder written in Go
 brew "fzf"
+# Interact with Google Gemini AI models from the command-line
+brew "gemini-cli"
 # Nonsense activity generator
 brew "genact"
 # GitHub command-line tool
 brew "gh"
+# Go manage your Ollama models
+brew "gollama"
 # Game of consumption
 brew "greed"
 # User-friendly cURL replacement (command-line HTTP client)
@@ -49,6 +53,8 @@ brew "yt-dlp"
 brew "mpv"
 # Free (GNU) replacement for the Pico text editor
 brew "nano"
+# Create, run, and share large language models (LLMs)
+brew "ollama", restart_service: :changed
 # Fast, disk space efficient package manager
 brew "pnpm"
 # Interpreted, interactive, object-oriented programming language
@@ -80,8 +86,10 @@ cask "imageoptim"
 cask "jordanbaird-ice"
 # Automation software
 cask "keyboard-maestro"
-# Run LLMs locally
-cask "msty"
+# Discover, download, and run local LLMs
+cask "lm-studio"
+# Verify system files structure, run miscellaneous maintenance and more
+cask "onyx"
 # Replacement for Docker Desktop
 cask "orbstack"
 # Collaboration platform for API development
@@ -97,3 +105,28 @@ cask "stats"
 # Native GUI tool for relational databases
 cask "tableplus"
 mas "Numbers", id: 409203825
+vscode "astro-build.astro-vscode"
+vscode "bradlc.vscode-tailwindcss"
+vscode "divyamrit.alpine-snippets"
+vscode "esbenp.prettier-vscode"
+vscode "mechatroner.rainbow-csv"
+vscode "ms-azuretools.vscode-containers"
+vscode "ms-azuretools.vscode-docker"
+vscode "ms-mssql.data-workspace-vscode"
+vscode "ms-mssql.mssql"
+vscode "ms-mssql.sql-bindings-vscode"
+vscode "ms-mssql.sql-database-projects-vscode"
+vscode "ms-python.debugpy"
+vscode "ms-python.python"
+vscode "ms-python.vscode-pylance"
+vscode "ms-python.vscode-python-envs"
+vscode "ms-toolsai.jupyter"
+vscode "ms-toolsai.jupyter-keymap"
+vscode "ms-toolsai.jupyter-renderers"
+vscode "ms-toolsai.vscode-jupyter-cell-tags"
+vscode "ms-toolsai.vscode-jupyter-slideshow"
+vscode "pcbowers.alpine-intellisense"
+vscode "sperovita.alpinejs-syntax-highlight"
+vscode "tomoki1207.pdf"
+vscode "unifiedjs.vscode-mdx"
+vscode "zarifprogrammer.tailwind-snippets"
