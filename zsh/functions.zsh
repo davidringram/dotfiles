@@ -95,3 +95,11 @@ function clean_mac() {
     echo "✅ Done! Your M4 is now lean and mean!"
     fastfetch
 }
+
+# 5. NPM Token Loader
+# Usage: 'load-npm'
+# Logic: Pulls the token from macOS Keychain and exports it for the session.
+function load-npm() {
+  export NPM_TOKEN=$(security find-generic-password -a "$USER" -s "NPM_TOKEN" -w 2>/dev/null)
+  echo "🔑 NPM_TOKEN loaded into session."
+}

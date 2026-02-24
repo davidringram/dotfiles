@@ -1,21 +1,19 @@
 # Welcome Greeting
-echo "Welcome to the shell, sucker!"
+echo "Welcome to the shell!"
 
 # 1. Define Dotfiles Location
-
-# This method is more reliable for finding the actual folder where this file lives
 export ZSH_DOTS=$HOME/.dotfiles/zsh
 
-# --- LOAD MODULES ---
-# We check if the file exists before sourcing to prevent those "no such file" errors
-[[ -f "$ZSH_DOTS/path.zsh" ]]      && source "$ZSH_DOTS/path.zsh"
-[[ -f "$ZSH_DOTS/plugins.zsh" ]]   && source "$ZSH_DOTS/plugins.zsh"
-[[ -f "$ZSH_DOTS/alias.zsh" ]]     && source "$ZSH_DOTS/alias.zsh"
-[[ -f "$ZSH_DOTS/functions.zsh" ]] && source "$ZSH_DOTS/functions.zsh"
-[[ -f "$ZSH_DOTS/fun.zsh" ]]       && source "$ZSH_DOTS/fun.zsh"
+# --- LOAD MODULES (The Smart Way) ---
+# This automatically loads path, plugins, alias, functions, fun, and your new secrets!
+if [ -d "$ZSH_DOTS" ]; then
+  for file in "$ZSH_DOTS"/*.zsh; do
+    source "$file"
+  done
+fi
 
-# Starts every new shell with a dragon dispensing wisdom
+# 2. Daily Dragon Wisdom
 fortune | cowsay -f dragon
 
-# 4. Dotfiles Course Placeholder
+# 3. Dotfiles Course Placeholder
 # (Add your course-specific learnings here)

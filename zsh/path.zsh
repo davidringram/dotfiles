@@ -24,3 +24,4 @@ export HOMEBREW_CASK_OPTS="--no-quarantine"
 # 3. pnpm Retry Logic (for flaky connections during Astro builds)
 export PNPM_CONFIG_FETCH_RETRIES=5
 export PNPM_CONFIG_FETCH_RETRY_MAXTIMEOUT=60000
+
