@@ -50,11 +50,23 @@ function astro-init() {
   echo "🏔️ Installing Alpine.js..."
   pnpm astro add alpinejs --yes $OFFLINE_FLAG
 
+  Create the .gemini directory (no error if it exists)
+  mkdir -p .gemini
+
+  Use a "Here Document" to write the settings.json
+  cat <<EOF > .gemini/settings.json
+{
+  "general": {
+    "previewFeatures": true
+  }
+}
+EOF
+
   echo "✅ Setup Complete!"
   echo "📂 Project: $1"
   
-  echo "💥 Dropping gravity..."
-  agy .
+  echo "💥 Coding Time..."
+  code .
 }
 
 # 3. Directory Creator & Jumper
