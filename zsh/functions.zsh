@@ -180,20 +180,20 @@ renv/library/
 renv/staging/
 EOF
 
-  # 5. Initialize renv (Isolation)
-  echo "📦 Initializing renv for package management..."
+  # 5. Initialize renv
+  echo "📦 Initializing renv..."
   Rscript -e "if (!requireNamespace('renv', quietly = TRUE)) install.packages('renv'); renv::init(bare = TRUE)"
 
-  # 6. GitHub Integration
-  git add .
-  git commit -m "Initial commit: Structured R Project with renv"
-  
-  echo "🚀 Creating Private GitHub repository..."
-  # This uses the name you gave the project as the repo name
-  gh repo create "$PROJ_NAME" --private --source=. --remote=origin --push
+  # 6. Create initial lockfile
+  echo "📸 Creating initial lockfile..."
+  Rscript -e "renv::snapshot(confirm = FALSE)"
 
-  # 7. Open in RStudio
+  # 7. Create GitHub Repo (Infrastructure only)
+  echo "🚀 Creating Private GitHub repository (Empty)..."
+  gh repo create "$PROJ_NAME" --private --source=. --remote=origin
+
+  # 8. Open in RStudio
   open -a RStudio "$PROJ_NAME.Rproj"
   
-  echo "✅ Project '$PROJ_NAME' is live on GitHub and local!"
+  echo "✅ Project '$PROJ_NAME' created. Local only until you commit & push!"
 }
