@@ -136,20 +136,17 @@ function clean_mac() {
 # 5. NPM Token Loader
 # Usage: 'load-npm'
 # Logic: Pulls the token from macOS Keychain and exports it for the session.
-function load-npm() {
-  export NPM_TOKEN=$(security find-generic-password -a "$USER" -s "NPM_TOKEN" -w 2>/dev/null)
-  echo "🔑 NPM_TOKEN loaded into session."
-}
-
 function rproj() {
-  # 1. Define path
-  local PROJ_PATH="$HOME/Documents/Analytics/R_Projects/$1"
+  # 1. Define paths
+  local PROJ_NAME=$1
+  local PROJ_PATH="$HOME/Documents/Analytics/R_Projects/$PROJ_NAME"
   
-  # 2. Create the folder structure
+  # 2. Create the folder structure (Your preferred layout)
   mkdir -p "$PROJ_PATH/data" "$PROJ_PATH/scripts" "$PROJ_PATH/output"
+  cd "$PROJ_PATH" || return
   
-  # 3. Create a clean .Rproj file manually (Prevents the 'moved/deleted' error)
-  cat > "$PROJ_PATH/$1.Rproj" <<EOF
+  # 3. Create the .Rproj file with your specific settings
+  cat > "$PROJ_PATH/$PROJ_NAME.Rproj" <<EOF
 Version: 1.0
 
 RestoreWorkspace: No
@@ -165,8 +162,38 @@ RnwWeave: Sweave
 LaTeX: pdfLaTeX
 EOF
 
-  # 4. Open in RStudio
-  open -a RStudio "$PROJ_PATH/$1.Rproj"
+  # 4. Initialize Git & .gitignore (Crucial for GitHub)
+  git init
+  cat > .gitignore <<EOF
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.DS_Store
+# Don't upload raw data if it's too big or sensitive
+data/*
+!data/.gitkeep
+output/*
+!output/.gitkeep
+# Renv library
+renv/library/
+renv/staging/
+EOF
+
+  # 5. Initialize renv (Isolation)
+  echo "📦 Initializing renv for package management..."
+  Rscript -e "if (!requireNamespace('renv', quietly = TRUE)) install.packages('renv'); renv::init(bare = TRUE)"
+
+  # 6. GitHub Integration
+  git add .
+  git commit -m "Initial commit: Structured R Project with renv"
   
-  echo "🚀 Project '$1' created at $PROJ_PATH"
+  echo "🚀 Creating Private GitHub repository..."
+  # This uses the name you gave the project as the repo name
+  gh repo create "$PROJ_NAME" --private --source=. --remote=origin --push
+
+  # 7. Open in RStudio
+  open -a RStudio "$PROJ_NAME.Rproj"
+  
+  echo "✅ Project '$PROJ_NAME' is live on GitHub and local!"
 }
