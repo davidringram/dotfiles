@@ -2,6 +2,10 @@
 # ALIASES (The Shortcuts)
 # ------------------------------------------------------------------------------
 
+# --- Fix python path ---
+alias python="python3"
+alias pip="pip3"
+
 # --- Navigation & Core Core ---
 alias ..="cd .."
 alias ...="cd ../.."
