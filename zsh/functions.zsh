@@ -181,6 +181,20 @@ renv/staging/
 EOF
 
   # 5. Initialize renv
+  create_r() {
+  # Ensure a project name was provided
+  if [ -z "$1" ]; then
+    echo "❌ Error: Please provide a project name."
+    return 1
+  fi
+
+  local PROJ_NAME=$1
+  mkdir -p "$PROJ_NAME"
+  cd "$PROJ_NAME" || return
+
+  # --- Your Code Starts Here ---
+
+  # 5. Initialize renv
   echo "📦 Initializing renv..."
   Rscript -e "if (!requireNamespace('renv', quietly = TRUE)) install.packages('renv'); renv::init(bare = TRUE)"
 
@@ -189,10 +203,14 @@ EOF
   Rscript -e "renv::snapshot(confirm = FALSE)"
 
   # 7. Create GitHub Repo (Infrastructure only)
+  # Note: --source=. assumes you've initialized git (git init) already!
   echo "🚀 Creating Private GitHub repository (Empty)..."
+  git init
   gh repo create "$PROJ_NAME" --private --source=. --remote=origin
 
-  # 8. Open in RStudio
+  # 8. Open in RStudio (Assumes .Rproj file exists)
+  # Tip: You might need to create the .Rproj file first if it doesn't exist
+  touch "$PROJ_NAME.Rproj"
   open -a RStudio "$PROJ_NAME.Rproj"
   
   echo "✅ Project '$PROJ_NAME' created. Local only until you commit & push!"
