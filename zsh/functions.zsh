@@ -133,20 +133,39 @@ function clean_mac() {
     fastfetch
 }
 
-# 5. NPM Token Loader
-# Usage: 'load-npm'
-# Logic: Pulls the token from macOS Keychain and exports it for the session.
-function rproj() {
-  # 1. Define paths
+
+# 🚀 God Tier R Project Creator
+# Usage: mkR my_new_project
+mkR() {
+  # 1. Validation & Variable Setup
+  if [ -z "$1" ]; then
+    echo "❌ Error: Please provide a project name."
+    echo "Usage: mkR project_name"
+    return 1
+  fi
+
   local PROJ_NAME=$1
-  local PROJ_PATH="$HOME/Documents/Analytics/R_Projects/$PROJ_NAME"
-  
-  # 2. Create the folder structure (Your preferred layout)
+  local PROJ_BASE="$HOME/Documents/Analytics/R_Projects"
+  local PROJ_PATH="$PROJ_BASE/$PROJ_NAME"
+
+  # Prevent overwriting an existing project
+  if [ -d "$PROJ_PATH" ]; then
+    echo "⚠️  Directory already exists: $PROJ_PATH"
+    return 1
+  fi
+
+  # 2. Structure & Directory Setup
+  echo "📁 Creating folder structure at $PROJ_PATH..."
   mkdir -p "$PROJ_PATH/data" "$PROJ_PATH/scripts" "$PROJ_PATH/output"
-  cd "$PROJ_PATH" || return
   
-  # 3. Create the .Rproj file with your specific settings
-  cat > "$PROJ_PATH/$PROJ_NAME.Rproj" <<EOF
+  # Create .gitkeep files so empty folders are tracked by Git
+  touch "$PROJ_PATH/data/.gitkeep" "$PROJ_PATH/scripts/.gitkeep" "$PROJ_PATH/output/.gitkeep"
+  
+  cd "$PROJ_PATH" || return
+
+  # 3. Create .Rproj File (Best Practice Settings)
+  echo "📄 Generating .Rproj config..."
+  cat > "$PROJ_NAME.Rproj" <<EOF
 Version: 1.0
 
 RestoreWorkspace: No
@@ -162,15 +181,16 @@ RnwWeave: Sweave
 LaTeX: pdfLaTeX
 EOF
 
-  # 4. Initialize Git & .gitignore (Crucial for GitHub)
-  git init
+  # 4. Initialize Git & .gitignore
+  echo "🔧 Initializing Git..."
+  git init -q
   cat > .gitignore <<EOF
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
 .DS_Store
-# Don't upload raw data if it's too big or sensitive
+# Data/Output safety (keeps structure, ignores files)
 data/*
 !data/.gitkeep
 output/*
@@ -181,37 +201,26 @@ renv/staging/
 EOF
 
   # 5. Initialize renv
-  create_r() {
-  # Ensure a project name was provided
-  if [ -z "$1" ]; then
-    echo "❌ Error: Please provide a project name."
-    return 1
-  fi
-
-  local PROJ_NAME=$1
-  mkdir -p "$PROJ_NAME"
-  cd "$PROJ_NAME" || return
-
-  # --- Your Code Starts Here ---
-
-  # 5. Initialize renv
-  echo "📦 Initializing renv..."
-  Rscript -e "if (!requireNamespace('renv', quietly = TRUE)) install.packages('renv'); renv::init(bare = TRUE)"
+  echo "📦 Initializing renv (this may take a moment)..."
+  Rscript -e "if (!requireNamespace('renv', quietly = TRUE)) install.packages('renv', repos='https://cloud.r-project.org'); renv::init(bare = TRUE)"
 
   # 6. Create initial lockfile
   echo "📸 Creating initial lockfile..."
   Rscript -e "renv::snapshot(confirm = FALSE)"
 
-  # 7. Create GitHub Repo (Infrastructure only)
-  # Note: --source=. assumes you've initialized git (git init) already!
-  echo "🚀 Creating Private GitHub repository (Empty)..."
-  git init
-  gh repo create "$PROJ_NAME" --private --source=. --remote=origin
+  # 7. GitHub Repository Creation
+  if command -v gh &> /dev/null; then
+    echo "🚀 Creating Private GitHub repository..."
+    git add .
+    git commit -m "Initial project structure"
+    gh repo create "$PROJ_NAME" --private --source=. --remote=origin --push
+  else
+    echo "⚠️  GitHub CLI (gh) not found. Skipping repo creation."
+  fi
 
-  # 8. Open in RStudio (Assumes .Rproj file exists)
-  # Tip: You might need to create the .Rproj file first if it doesn't exist
-  touch "$PROJ_NAME.Rproj"
+  # 8. Launch RStudio
+  echo "🎨 Opening in RStudio..."
   open -a RStudio "$PROJ_NAME.Rproj"
   
-  echo "✅ Project '$PROJ_NAME' created. Local only until you commit & push!"
+  echo "✅ Project '$PROJ_NAME' is ready to rock!"
 }
